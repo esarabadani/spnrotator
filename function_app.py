@@ -14,8 +14,14 @@ subscription_id = "Enter Subscription ID here"
 # Replace with your Entra tenant ID
 tenant_id = 'Enter Tenant ID here'
 
+# days before expiry to rotate the secret
+validity_period_days = 365
+
 # Client ID of the user-assigned managed identity
 client_id = "Enter Client ID of managed identity here"
+
+# keyvault url where the secret is stored
+key_vault_uri = "https://rotation-kv01.vault.azure.net/"
 
 # Authenticate using managed identity and get a token
 credential = ManagedIdentityCredential(client_id=client_id)
@@ -46,9 +52,9 @@ def spn(azeventgrid: func.EventGridEvent):
     sp_obj_id = response_data['value'][0]['id']
     logging.info(f'Service Principal Object ID: {sp_obj_id}')
 
-    # Define the new secret payload. Expirty date is set to 365 days from the current date
+    # Define the new secret payload. Expirty date is set to defined in validity_period_days days from the current date
     start_datetime = datetime.now(timezone.utc)
-    end_datetime = start_datetime + timedelta(days=365)
+    end_datetime = start_datetime + timedelta(days=validity_period_days)
 
     new_secret_value =  str(start_datetime.year)
 
@@ -75,7 +81,7 @@ def spn(azeventgrid: func.EventGridEvent):
         print(f"Failed to rotate secret: {response.status_code} - {response.text}")
 
     # Store the new secret value in Azure Key Vault
-    key_vault_uri = "https://rotation-kv01.vault.azure.net/"
+    
     secret_client = SecretClient(vault_url=key_vault_uri, credential=credential)
 
     secret_client.set_secret(spn_name, new_secret_value)
