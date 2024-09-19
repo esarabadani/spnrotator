@@ -7,8 +7,9 @@ This Azure Function is designed to rotate secrets for a Service Principal when a
 1. **Azure Subscription:** Ensure you have an active Azure subscription.  
 2. **Azure Key Vault:** Set up an Azure Key Vault to store and manage secrets.  
 3. **Event Grid:** Configure an Azure Event Grid topic to trigger the function.  
-4. **Managed Identity:** Assign a user-assigned managed identity to the Azure Function for authentication.  
-5. **Microsoft Graph API Permissions:** Ensure the managed identity has appropriate permissions to interact with the Microsoft Graph API.  
+4. **Managed Identity:** Assign a user-assigned managed identity to the Azure Function for authentication.
+5. **Assign SPN ownership right to the Managed Identity:** Make the Managed Identity the Owner of the Service Principal 
+6. **Microsoft Graph API Permissions:** Ensure the managed identity has appropriate permissions to interact with the Microsoft Graph API. (Application.ReadWrite.OwnedBy and Directory.Read.All)
   
 ## Setup  
   
