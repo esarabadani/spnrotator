@@ -95,7 +95,3 @@ Once deployed, the function will automatically trigger and rotate secrets when a
 - **Authentication Errors:** Ensure that the managed identity is correctly assigned and has the necessary permissions.  
 - **Event Trigger:** Verify that the Event Grid is properly configured to trigger the function.  
 - **API Permissions:** Ensure the managed identity has the required permissions to interact with the Microsoft Graph API.  
-  
-## License  
-  
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
